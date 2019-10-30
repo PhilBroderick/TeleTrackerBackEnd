@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TeleTracker.CustomResponses;
 using TeleTracker.DTOs;
 
 namespace TeleTracker.Controllers
@@ -24,6 +25,12 @@ namespace TeleTracker.Controllers
         public IActionResult GetAllShowsAsync()
         {
             return Ok(new List<ShowDTO>().AsEnumerable());
+        }
+
+        [HttpPost]
+        public IActionResult SubscribeToShowAsync(string showID)
+        {
+            return Ok(new SuccessfulSubscribeResponse("123", showID));
         }
     }
 }

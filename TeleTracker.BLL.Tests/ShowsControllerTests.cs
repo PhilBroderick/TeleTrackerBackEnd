@@ -3,6 +3,7 @@ using TeleTracker.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using TeleTracker.DTOs;
 using System.Collections.Generic;
+using TeleTracker.CustomResponses;
 
 namespace Tests
 {
@@ -44,6 +45,14 @@ namespace Tests
         {
             var result = (OkObjectResult)_showController.GetAllShowsAsync();
             Assert.That(result.Value, Is.TypeOf<List<ShowDTO>>());
+        }
+
+        [Test]
+        public void SubscribeToShowAsync_IdIsValid_ReturnSuccessfulSubscribeResponse()
+        {
+            var result = (OkObjectResult)_showController.SubscribeToShowAsync("1234");
+
+            Assert.That(((SuccessfulSubscribeResponse)result.Value).EntityID, Is.EqualTo("1234"));
         }
     }
 }
