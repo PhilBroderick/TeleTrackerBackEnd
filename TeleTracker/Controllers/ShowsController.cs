@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TeleTracker.DTOs;
 
 namespace TeleTracker.Controllers
 {
@@ -11,11 +12,18 @@ namespace TeleTracker.Controllers
     [ApiController]
     public class ShowsController : ControllerBase
     {
-        public ActionResult GetShowByIdAsync(string showID)
+        [HttpGet("{id}")]
+        public IActionResult GetShowByIdAsync(string showID)
         {
             if (string.IsNullOrWhiteSpace(showID))
                 return NotFound();
-            return Ok(showID);
+            return Ok(new ShowDTO() { ID = showID });
+        }
+
+        [HttpGet]
+        public IActionResult GetAllShowsAsync()
+        {
+            return Ok(new List<ShowDTO>().AsEnumerable());
         }
     }
 }
