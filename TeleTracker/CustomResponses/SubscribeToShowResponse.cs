@@ -5,21 +5,24 @@ using System.Threading.Tasks;
 
 namespace TeleTracker.CustomResponses
 {
-    public class SuccessfulSubscribeResponse : ICustomResponse
+    public class SubscribeToShowResponse : ICustomResponse
     {
+        private bool _isSuccess;
         public string UserID { get ; }
         public string EntityID { get;}
         public string Message
         {
             get
             {
-                return $"User {UserID} successfully subscribed to {EntityID}";
+                return string.Concat(UserID, _isSuccess ? " successfully" : " unsuccessfully", "subscribed to", EntityID);
             }
         }
-        public SuccessfulSubscribeResponse(string userID, string showID)
+
+        public SubscribeToShowResponse(string userID, string showID, bool isSuccess)
         {
             UserID = userID;
             EntityID = showID;
+            _isSuccess = isSuccess;
         }
     }
 }

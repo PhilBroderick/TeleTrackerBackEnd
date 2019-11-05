@@ -30,7 +30,9 @@ namespace TeleTracker.Controllers
         [HttpPost]
         public IActionResult SubscribeToShowAsync(string showID)
         {
-            return Ok(new SuccessfulSubscribeResponse("123", showID));
+            if (string.IsNullOrWhiteSpace(showID))
+                return NotFound(new SubscribeToShowResponse("123", showID, false));
+            return Ok(new SubscribeToShowResponse("123", showID, true));
         }
     }
 }

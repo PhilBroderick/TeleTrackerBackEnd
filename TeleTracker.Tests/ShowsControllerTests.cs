@@ -52,7 +52,18 @@ namespace Tests
         {
             var result = (OkObjectResult)_showController.SubscribeToShowAsync("1234");
 
-            Assert.That(((SuccessfulSubscribeResponse)result.Value).EntityID, Is.EqualTo("1234"));
+            Assert.That(((SubscribeToShowResponse)result.Value).Message, Does.Contain("successfully"));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void SubscribeToShowAsync_IdIsInvalid_ReturnUnsuccesfulSubscribeResponse(string invalidShowID)
+        {
+            var result = (NotFoundObjectResult)_showController.SubscribeToShowAsync(invalidShowID);
+
+            Assert.That(((SubscribeToShowResponse)result.Value).Message, Does.Contain("unsuccessfully"));
         }
     }
 }

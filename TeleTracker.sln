@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTracker", "TeleTracker\TeleTracker.csproj", "{9F284014-167D-4EDC-A47D-DB1BEC60FCB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTracker", "TeleTracker\TeleTracker.csproj", "{9F284014-167D-4EDC-A47D-DB1BEC60FCB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTracker.BLL.Tests", "TeleTracker.BLL.Tests\TeleTracker.BLL.Tests.csproj", "{C1D31262-CC70-480C-821D-90BF51D4FE4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTracker.Tests", "TeleTracker.Tests\TeleTracker.Tests.csproj", "{C1D31262-CC70-480C-821D-90BF51D4FE4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTracker.BLL", "TeleTracker.BLL\TeleTracker.BLL.csproj", "{861EE67E-59A2-4FB5-8120-241E0BE16EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTracker.BLL", "TeleTracker.BLL\TeleTracker.BLL.csproj", "{861EE67E-59A2-4FB5-8120-241E0BE16EB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
