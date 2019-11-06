@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TeleTracker.CustomResponses;
-using TeleTracker.DTOs;
+using TeleTracker.Core.DTOs;
 
 namespace TeleTracker.Controllers
 {

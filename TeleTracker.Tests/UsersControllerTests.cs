@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using TeleTracker.Controllers;
-using TeleTracker.DTOs;
+using TeleTracker.Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TeleTracker.BLL.Tests

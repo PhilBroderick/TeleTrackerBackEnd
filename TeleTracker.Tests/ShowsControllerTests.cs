@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using TeleTracker.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using TeleTracker.DTOs;
 using System.Collections.Generic;
 using TeleTracker.CustomResponses;
+using TeleTracker.Core.DTOs;
 
 namespace Tests
 {

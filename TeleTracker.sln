@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTracker.Tests", "TeleTr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeleTracker.BLL", "TeleTracker.BLL\TeleTracker.BLL.csproj", "{861EE67E-59A2-4FB5-8120-241E0BE16EB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleTracker.Core", "TeleTracker.Core\TeleTracker.Core.csproj", "{558D19F0-9E49-423D-BC87-5FF0512DDBC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{861EE67E-59A2-4FB5-8120-241E0BE16EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{861EE67E-59A2-4FB5-8120-241E0BE16EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{861EE67E-59A2-4FB5-8120-241E0BE16EB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{558D19F0-9E49-423D-BC87-5FF0512DDBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{558D19F0-9E49-423D-BC87-5FF0512DDBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{558D19F0-9E49-423D-BC87-5FF0512DDBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{558D19F0-9E49-423D-BC87-5FF0512DDBC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
