@@ -14,17 +14,22 @@ namespace TeleTracker.Controllers
     public class ShowsController : ControllerBase
     {
         [HttpGet("{id}")]
-        public IActionResult GetShowByIdAsync(string showID)
+        public IActionResult GetShowByIdAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(showID))
+            if (string.IsNullOrWhiteSpace(id))
                 return NotFound();
-            return Ok(new ShowDTO() { ID = showID });
+            return Ok(new ShowDTO() { ID = id, Title = $"Show {id}" });
         }
 
         [HttpGet]
         public IActionResult GetAllShowsAsync()
         {
-            return Ok(new List<ShowDTO>().AsEnumerable());
+            var shows = new List<ShowDTO>()
+            { new ShowDTO { ID = "1", Title = "Show 1"},
+            new ShowDTO { ID = "2", Title = "Show 2"},
+            new ShowDTO { ID = "3", Title = "Show 3"}
+            };
+            return Ok(shows.AsEnumerable());
         }
 
         [HttpPost]
