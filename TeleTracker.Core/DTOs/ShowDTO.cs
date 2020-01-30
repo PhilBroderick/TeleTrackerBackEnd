@@ -8,5 +8,6 @@ namespace TeleTracker.Core.DTOs
     public class ShowDTO
     {
         public string ID { get; set; }
+        public string Title { get; set; }
     }
 }
