@@ -27,7 +27,8 @@ namespace TeleTracker.Controllers
             var shows = new List<ShowDTO>()
             { new ShowDTO { ID = "1", Title = "Show 1"},
             new ShowDTO { ID = "2", Title = "Show 2"},
-            new ShowDTO { ID = "3", Title = "Show 3"}
+            new ShowDTO { ID = "3", Title = "Show 3"},
+            new ShowDTO { ID = "4", Title = "Show 4"}
             };
             return Ok(shows.AsEnumerable());
         }
