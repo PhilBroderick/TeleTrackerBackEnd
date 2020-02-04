@@ -18,7 +18,19 @@ namespace TeleTracker.Controllers
         {
             if (string.IsNullOrWhiteSpace(id))
                 return NotFound();
-            return Ok(new ShowDTO() { ID = id, Title = $"Show {id}" });
+            return Ok(new ShowDTO {
+                ID = id,
+                Title = $"Show {id}",
+                Seasons = new List<SeasonDTO> {
+                    new SeasonDTO
+                    {
+                        Name = "Season 1",
+                        EpisodeCount = 1,
+                        EpisodeList = new List<EpisodeDTO>(),
+                        SeasonId = 1
+                    }
+                }
+            });
         }
 
         [HttpGet]

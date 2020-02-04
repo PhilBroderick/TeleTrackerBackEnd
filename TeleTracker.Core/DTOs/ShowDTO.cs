@@ -9,5 +9,6 @@ namespace TeleTracker.Core.DTOs
     {
         public string ID { get; set; }
         public string Title { get; set; }
+        public IEnumerable<SeasonDTO> Seasons { get; set; }
     }
 }
