@@ -51,7 +51,7 @@ namespace TeleTracker
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                            Encoding.ASCII.GetBytes(Configuration.GetSection("Token").Value)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
