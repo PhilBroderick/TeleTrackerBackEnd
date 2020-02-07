@@ -3,7 +3,7 @@ using TeleTracker.Controllers;
 using TeleTracker.Core.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TeleTracker.BLL.Tests
+namespace TeleTracker.Tests.API
 {
     [TestFixture]
     public class UsersControllerTests

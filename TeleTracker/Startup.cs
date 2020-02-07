@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TeleTracker.BLL;
+using TeleTracker.Core.Interfaces;
+using TeleTracker.DAL.Models;
+using TeleTracker.DAL.Repositories;
 
 namespace TeleTracker
 {
@@ -20,6 +25,9 @@ namespace TeleTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TeleTrackerContext>(item =>
+                item.UseSqlServer(Configuration.GetConnectionString("DbConn")));
+
             services.AddCors(options =>
             {
                 options.AddPolicy(_myAllowSpecificOrigins,
@@ -29,6 +37,8 @@ namespace TeleTracker
                     });
             });
             services.AddControllers();
+            services.AddScoped<IAuthService, UserAuthenticationService>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,8 +54,8 @@ namespace TeleTracker
                 app.UseHsts();
             }
             app.UseRouting();
-            app.UseAuthorization();
             app.UseCors(_myAllowSpecificOrigins);
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
