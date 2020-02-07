@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TeleTracker.BLL;
-using TeleTracker.Core.DTOs;
 using TeleTracker.Core.Interfaces;
+using TeleTracker.Models;
 
 namespace TeleTracker.Controllers
 {
@@ -29,13 +25,25 @@ namespace TeleTracker.Controllers
 
             try
             {
-                var registeredUser = await _authService.Register(userForRegistorDTO);
+                var registeredUser = await _authService.Register(userForRegistorDTO.Username, userForRegistorDTO.Password);
                 return StatusCode(201);
             }
             catch (Exception ex)
             {
                 return BadRequest($"Error registering user, {ex}.");
             }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody]UserForLoginDTO userForLoginDTO)
+        {
+            var token = await _authService.Login(userForLoginDTO.Username, userForLoginDTO.Password);
+            if (token == null || string.IsNullOrWhiteSpace(token))
+                return Unauthorized();
+            return Ok(new
+            {
+                token
+            });
         }
     }
 }

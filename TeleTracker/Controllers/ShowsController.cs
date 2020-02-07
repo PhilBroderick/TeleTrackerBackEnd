@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TeleTracker.CustomResponses;
 using TeleTracker.Core.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TeleTracker.Controllers
 {
@@ -18,7 +17,8 @@ namespace TeleTracker.Controllers
         {
             if (string.IsNullOrWhiteSpace(id))
                 return NotFound();
-            return Ok(new ShowDTO {
+            return Ok(new ShowDTO
+            {
                 ID = id,
                 Title = $"Show {id}",
                 Seasons = new List<SeasonDTO> {
