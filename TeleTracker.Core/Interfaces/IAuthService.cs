@@ -9,9 +9,9 @@ namespace TeleTracker.Core.Interfaces
 {
     public interface IAuthService
     {
-        Task<UserDTO> Register(UserForRegisterDTO user);
+        Task<UserDTO> Register(string username, string password);
 
-        Task<UserDTO> Login(UserDTO user);
+        Task<string> Login(string username, string password);
 
         Task<bool> UserExists(string username);
     }
