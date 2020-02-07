@@ -339,3 +339,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/TeleTracker/appsettings.Development.json
