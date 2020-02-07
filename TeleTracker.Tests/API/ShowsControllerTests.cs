@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TeleTracker.CustomResponses;
 using TeleTracker.Core.DTOs;
 
-namespace Tests
+namespace TeleTracker.Tests.API
 {
     [TestFixture]
     public class ShowsControllerTests
@@ -38,7 +38,6 @@ namespace Tests
             var result = _showController.GetShowByIdAsync(invalidShowID);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
-
 
         [Test]
         public void GetAllShowsAsync_WhenCalled_ReturnsListOfShowDtos()
