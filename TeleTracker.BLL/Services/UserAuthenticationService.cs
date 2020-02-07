@@ -35,7 +35,7 @@ namespace TeleTracker.BLL
         private string GenerateJWTToken(User user)
         {
             var claims = new[]
-                        {
+            {
                 new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
                 new Claim(ClaimTypes.Name, user.Username)
             };
@@ -60,6 +60,8 @@ namespace TeleTracker.BLL
 
         public async Task<UserDTO> Register(string username, string password)
         {
+            if (username is null)
+                return await Task.FromResult<UserDTO>(null);
             var user = new User
             {
                 Username = username.ToLower()
@@ -74,7 +76,7 @@ namespace TeleTracker.BLL
                 };
             }
             else
-                return await Task.FromResult(new UserDTO());
+                return await Task.FromResult<UserDTO>(null);
         }
 
         public async Task<bool> UserExists(string username)
