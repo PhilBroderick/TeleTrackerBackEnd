@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using TeleTracker.Core.Common;
 using TeleTracker.Core.DTOs;
 
-namespace TeleTracker.BLL.Interfaces
+namespace TeleTracker.Core.Interfaces
 {
-    public interface IShowAPI
+    public interface IShowService
     {
         Task<List<ShowDTO>> GetUserSuscribedShowsAsync();
 

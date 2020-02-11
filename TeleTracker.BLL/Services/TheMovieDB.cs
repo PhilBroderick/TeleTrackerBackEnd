@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TeleTracker.BLL.Interfaces;
 using TeleTracker.Core.Common;
 using TeleTracker.Core.DTOs;
+using TeleTracker.Core.Interfaces;
 
 namespace TeleTracker.BLL.Services
 {
-    public class TheMovieDB : IShowAPI
+    public class TheMovieDB : IShowService
     {
+        private readonly string _apiKey;
+
+        public TheMovieDB(string apiKey)
+        {
+            _apiKey = apiKey;
+        }
+
         public Task<List<ShowDTO>> GetShowsBySearchTerm(string searchTerm)
         {
             throw new NotImplementedException();

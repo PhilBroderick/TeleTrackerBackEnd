@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeleTracker.Core;
@@ -51,8 +52,8 @@ namespace TeleTracker.DAL.Repositories
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await _context.Users.AddAsync(user).ConfigureAwait(false);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             return user;
         }
@@ -66,9 +67,12 @@ namespace TeleTracker.DAL.Repositories
 
         public async Task<bool> UserExists(string username)
         {
-            if (await _context.Users.AnyAsync(u => u.Username == username))
-                return true;
-            return false;
+            return await _context.Users.AnyAsync(u => u.Username == username).ConfigureAwait(false);
+        }
+
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.ID == userId).ConfigureAwait(false);
         }
     }
 }

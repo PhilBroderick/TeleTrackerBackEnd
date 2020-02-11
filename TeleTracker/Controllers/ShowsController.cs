@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TeleTracker.CustomResponses;
 using TeleTracker.Core.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using TeleTracker.Core.Interfaces;
 
 namespace TeleTracker.Controllers
 {
@@ -12,6 +13,13 @@ namespace TeleTracker.Controllers
     [ApiController]
     public class ShowsController : ControllerBase
     {
+        private readonly IShowService _showService;
+
+        public ShowsController(IShowService showService)
+        {
+            _showService = showService;
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetShowByIdAsync(string id)
         {

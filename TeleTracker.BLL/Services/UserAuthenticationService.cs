@@ -83,5 +83,19 @@ namespace TeleTracker.BLL
         {
             return await _authRepository.UserExists(username.ToLower());
         }
+
+        public async Task<UserDTO> GetUserByIdAsync(string userId)
+        {
+            if (userId is null || !int.TryParse(userId, out var userIdInt))
+                return await Task.FromResult<UserDTO>(null);
+            var user = await _authRepository.GetUserByIdAsync(userIdInt);
+            if (user == null)
+                return await Task.FromResult<UserDTO>(null);
+            return new UserDTO
+            {
+                ID = user.ID.ToString(),
+                Username = user.Username
+            };
+        }
     }
 }

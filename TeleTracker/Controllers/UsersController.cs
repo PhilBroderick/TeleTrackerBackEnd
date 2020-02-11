@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TeleTracker.Core.DTOs;
+using TeleTracker.Core.Interfaces;
 
 namespace TeleTracker.Controllers
 {
@@ -12,12 +13,19 @@ namespace TeleTracker.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetUserByIdAsync(string id)
+        private readonly IAuthService _authService;
+
+        public UsersController(IAuthService authService)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            _authService = authService;
+        }
+        [HttpGet]
+        public async  Task<IActionResult> GetUserByIdAsync(string id)
+        {
+            var user = await _authService.GetUserByIdAsync(id);
+            if (user == null)
                 return NotFound();
-            return Ok(new UserDTO() { ID = id });
+            return Ok(user);
         }
     }
 }

@@ -14,5 +14,6 @@ namespace TeleTracker.Core.Interfaces
         Task<string> Login(string username, string password);
 
         Task<bool> UserExists(string username);
+        Task<UserDTO> GetUserByIdAsync(string id);
     }
 }
