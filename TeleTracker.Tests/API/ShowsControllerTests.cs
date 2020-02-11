@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TeleTracker.CustomResponses;
 using TeleTracker.Core.DTOs;
+using TeleTracker.Core.Interfaces;
+using Moq;
 
 namespace TeleTracker.Tests.API
 {
@@ -12,11 +14,13 @@ namespace TeleTracker.Tests.API
     {
         private ShowsController _showController;
         private ShowDTO _showDto;
+        private Mock<IShowService> _showService;
 
         [SetUp]
         public void Setup()
         {
-            _showController = new ShowsController();
+            _showService = new Mock<IShowService>();
+            _showController = new ShowsController(_showService.Object);
             _showDto = new ShowDTO();
             _showDto.ID = "1234";
         }
