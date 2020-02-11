@@ -30,7 +30,7 @@ namespace TeleTracker.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error registering user, {ex}.");
+                return StatusCode(500, $"Error registering user, {ex}.");
             }
         }
 
