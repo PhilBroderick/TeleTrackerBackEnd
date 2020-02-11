@@ -20,7 +20,7 @@ namespace TeleTracker.Controllers
             _authService = authService;
         }
         [HttpGet]
-        public async  Task<IActionResult> GetUserByIdAsync(string id)
+        public async Task<IActionResult> GetUserByIdAsync(string id)
         {
             var user = await _authService.GetUserByIdAsync(id);
             if (user == null)
