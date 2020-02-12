@@ -20,6 +20,7 @@ namespace TeleTracker.Controllers
             _movieService = movieService;
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieByIdAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
