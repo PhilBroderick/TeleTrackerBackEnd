@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
 using TeleTracker.BLL;
+using TeleTracker.BLL.Interfaces;
 using TeleTracker.BLL.Services;
 using TeleTracker.Core.Interfaces;
 using TeleTracker.DAL.Models;
@@ -49,8 +50,10 @@ namespace TeleTracker
             services.AddControllers();
             services.AddScoped<IAuthService, UserAuthenticationService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IShowService>(_ =>
-                new TheMovieDB(Configuration.GetSection("MovieDB_Key").Value));
+            services.AddScoped<IServiceConfiguration>(_ =>
+                new ServiceConfiguration(Configuration.GetSection("MovieDB_Key").Value, 
+                                         Configuration.GetSection("BaseMovieDBUrl").Value));
+            services.AddScoped<IShowService, ShowService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

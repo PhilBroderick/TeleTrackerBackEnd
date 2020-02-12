@@ -6,6 +6,7 @@ using TeleTracker.CustomResponses;
 using TeleTracker.Core.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using TeleTracker.Core.Interfaces;
+using System.Threading.Tasks;
 
 namespace TeleTracker.Controllers
 {
@@ -21,10 +22,12 @@ namespace TeleTracker.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetShowByIdAsync(string id)
+        public async Task<IActionResult> GetShowByIdAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return NotFound();
+
+            var show = await _showService.GetShowByIdAsync(id);
             return Ok(new ShowDTO
             {
                 ID = id,

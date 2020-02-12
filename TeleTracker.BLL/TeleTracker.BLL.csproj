@@ -13,8 +13,4 @@
   <ItemGroup>
     <ProjectReference Include="..\TeleTracker.Core\TeleTracker.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
 </Project>

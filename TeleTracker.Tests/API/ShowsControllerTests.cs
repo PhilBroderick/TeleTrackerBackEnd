@@ -28,7 +28,7 @@ namespace TeleTracker.Tests.API
         [Test]
         public void GetShowByIdAsync_IdIsValid_ReturnShowDto()
         {
-            var result = (OkObjectResult)_showController.GetShowByIdAsync("1234");
+            var result = (OkObjectResult)_showController.GetShowByIdAsync("1234").Result;
 
             Assert.AreEqual(_showDto.ID, ((ShowDTO)result.Value).ID);
         }
@@ -39,7 +39,7 @@ namespace TeleTracker.Tests.API
         [TestCase(" ")]
         public void GetShowByIdAsync_IdIsInvalid_ReturnNotFound(string invalidShowID)
         {
-            var result = _showController.GetShowByIdAsync(invalidShowID);
+            var result = _showController.GetShowByIdAsync(invalidShowID).Result;
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
