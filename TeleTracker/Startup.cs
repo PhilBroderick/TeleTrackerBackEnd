@@ -51,8 +51,7 @@ namespace TeleTracker
             services.AddScoped<IAuthService, UserAuthenticationService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IServiceConfiguration>(_ =>
-                new ServiceConfiguration(Configuration.GetSection("MovieDB_Key").Value, 
-                                         Configuration.GetSection("BaseMovieDBUrl").Value));
+                new ServiceConfiguration(Configuration.GetSection("MovieDB_Key").Value));
             services.AddScoped<IShowService, ShowService>();
             services.AddScoped<IMovieService, MovieService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -87,7 +86,7 @@ namespace TeleTracker
                         if (error != null)
                         {
                             context.Response.AddApplicationError(error.Error.Message);
-                            await context.Response.WriteAsync(error.Error.Message);
+                            await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
                         }
                     });
                 });
@@ -98,10 +97,7 @@ namespace TeleTracker
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

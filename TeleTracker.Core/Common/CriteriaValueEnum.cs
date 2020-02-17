@@ -3,7 +3,6 @@
     public enum CriteriaValueEnum
     {
         Top = 0,
-        New = 1,
-        Best = 2
+        Latest = 1
     }
 }

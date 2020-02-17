@@ -6,6 +6,7 @@ using TeleTracker.CustomResponses;
 using TeleTracker.Core.DTOs;
 using TeleTracker.Core.Interfaces;
 using Moq;
+using System.Threading.Tasks;
 
 namespace TeleTracker.Tests.API
 {
@@ -19,25 +20,27 @@ namespace TeleTracker.Tests.API
         [SetUp]
         public void Setup()
         {
-            _showService = new Mock<IShowService>();
-            _showController = new ShowsController(_showService.Object);
             _showDto = new ShowDTO();
             _showDto.ID = "1234";
+            _showService = new Mock<IShowService>();
+            _showService.Setup(s => s.GetMostPopularShows()).Returns(Task.FromResult(new List<ShowPopularityDTO>()));
+            _showService.Setup(s => s.GetShowByIdAsync(1234)).Returns(Task.FromResult(_showDto));
+            _showController = new ShowsController(_showService.Object);
         }
 
         [Test]
         public void GetShowByIdAsync_IdIsValid_ReturnShowDto()
         {
-            var result = (OkObjectResult)_showController.GetShowByIdAsync("1234").Result;
+            var result = (OkObjectResult)_showController.GetShowByIdAsync(1234).Result;
 
             Assert.AreEqual(_showDto.ID, ((ShowDTO)result.Value).ID);
         }
 
         [Test]
         [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
-        public void GetShowByIdAsync_IdIsInvalid_ReturnNotFound(string invalidShowID)
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void GetShowByIdAsync_IdIsInvalid_ReturnNotFound(int invalidShowID)
         {
             var result = _showController.GetShowByIdAsync(invalidShowID).Result;
             Assert.That(result, Is.TypeOf<NotFoundResult>());
@@ -67,6 +70,14 @@ namespace TeleTracker.Tests.API
             var result = (NotFoundObjectResult)_showController.SubscribeToShowAsync(invalidShowID);
 
             Assert.That(((SubscribeToShowResponse)result.Value).Message, Does.Contain("unsuccessfully"));
+        }
+
+        [Test]
+        public void GetPopularShowsAsync_WhenCalled_ReturnsListOfPopularShows()
+        {
+            var result = (OkObjectResult)_showController.GetPopularShowsAsync().Result;
+
+            Assert.That(result.Value, Is.TypeOf<List<ShowPopularityDTO>>());
         }
     }
 }

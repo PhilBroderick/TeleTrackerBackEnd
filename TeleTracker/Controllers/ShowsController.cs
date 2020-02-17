@@ -21,27 +21,15 @@ namespace TeleTracker.Controllers
             _showService = showService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetShowByIdAsync(string id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetShowByIdAsync(int id)
+        
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if (id <= 0)
                 return NotFound();
 
-            var show = await _showService.GetShowByIdAsync(id);
-            return Ok(new ShowDTO
-            {
-                ID = id,
-                Title = $"Show {id}",
-                Seasons = new List<SeasonDTO> {
-                    new SeasonDTO
-                    {
-                        Name = "Season 1",
-                        EpisodeCount = 1,
-                        EpisodeList = new List<EpisodeDTO>(),
-                        SeasonId = 1
-                    }
-                }
-            });
+            var show = await _showService.GetShowByIdAsync(id).ConfigureAwait(false);
+            return Ok(show);
         }
 
         [HttpGet]
@@ -62,6 +50,14 @@ namespace TeleTracker.Controllers
             if (string.IsNullOrWhiteSpace(showID))
                 return NotFound(new SubscribeToShowResponse("123", showID, false));
             return Ok(new SubscribeToShowResponse("123", showID, true));
+        }
+
+        [HttpGet("popular")]
+        public async Task<IActionResult> GetPopularShowsAsync()
+        {
+            var shows = await _showService.GetMostPopularShows();
+            if (shows == null) return BadRequest();
+            return Ok(shows);
         }
     }
 }
