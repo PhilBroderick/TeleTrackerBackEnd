@@ -15,5 +15,6 @@ namespace TeleTracker.Core.DTOs
         public bool InProduction { get; set; }
         public IEnumerable<SeasonDTO> Seasons { get; set; }
         public string PosterPath { get; set; }
+        public List<string> Genres { get; set; }
     }
 }

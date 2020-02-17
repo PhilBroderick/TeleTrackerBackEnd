@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using TeleTracker.BLL.Interfaces;
 using TeleTracker.Core.Common;
@@ -11,7 +8,6 @@ using TeleTracker.Core.DTOs;
 using TeleTracker.Core.Interfaces;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;
-using TMDbLib.Objects.TvShows;
 
 namespace TeleTracker.BLL.Services
 {
@@ -40,6 +36,7 @@ namespace TeleTracker.BLL.Services
                 Overview = show.Overview,
                 InProduction = show.InProduction,
                 Seasons = MapSeasons(show.Seasons),
+                Genres = show.Genres.Select(g => g.Name).ToList(),
                 PosterPath = $"https://image.tmdb.org/t/p/original{show.PosterPath}"
             };
         }
@@ -51,8 +48,9 @@ namespace TeleTracker.BLL.Services
                 yield return new SeasonDTO
                 {
                     SeasonId = season.Id,
-                    AirDate = season.AirDate.Value,
-                    SeasonNumber = season.SeasonNumber
+                    AirDate = season.AirDate.HasValue ? season.AirDate.Value : default,
+                    SeasonNumber = season.SeasonNumber,
+                    EpisodeCount = season.EpisodeCount
                 };
             }
         }

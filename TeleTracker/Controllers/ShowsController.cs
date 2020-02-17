@@ -23,7 +23,6 @@ namespace TeleTracker.Controllers
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetShowByIdAsync(int id)
-        
         {
             if (id <= 0)
                 return NotFound();
