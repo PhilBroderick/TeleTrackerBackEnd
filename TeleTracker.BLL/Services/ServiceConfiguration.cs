@@ -7,12 +7,10 @@ namespace TeleTracker.BLL.Services
 {
     public class ServiceConfiguration : IServiceConfiguration
     {
-        public ServiceConfiguration(string apiKey, string baseUrl)
+        public ServiceConfiguration(string apiKey)
         {
             ApiKey = apiKey;
-            BaseUrl = baseUrl;
         }
         public string ApiKey { get; set; }
-        public string BaseUrl { get; set; }
     }
 }

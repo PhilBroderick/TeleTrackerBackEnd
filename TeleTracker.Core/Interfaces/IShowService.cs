@@ -14,6 +14,8 @@ namespace TeleTracker.Core.Interfaces
         Task<List<ShowDTO>> GetShowsBySearchTerm(string searchTerm);
 
         Task<List<ShowDTO>> GetTopShowsByCriteria(CriteriaValueEnum citeria, TimeSpan timeSpan);
-        Task<ShowDTO> GetShowByIdAsync(string id);
+
+        Task<List<ShowPopularityDTO>> GetMostPopularShows();
+        Task<ShowDTO> GetShowByIdAsync(int id);
     }
 }

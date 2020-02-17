@@ -25,7 +25,7 @@ namespace TeleTracker.Controllers
         {
             if (string.IsNullOrWhiteSpace(id))
                 return NotFound();
-            var movie = await _movieService.GetMovieByIdAsync(id);
+            var movie = await _movieService.GetMovieByIdAsync(id).ConfigureAwait(false);
             if (movie == null)
                 return NotFound();
             return Ok(movie);
