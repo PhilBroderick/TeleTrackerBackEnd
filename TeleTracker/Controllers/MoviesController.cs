@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TeleTracker.Core.DTOs;
@@ -21,6 +22,7 @@ namespace TeleTracker.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetMovieByIdAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
