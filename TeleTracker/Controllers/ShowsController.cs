@@ -22,6 +22,7 @@ namespace TeleTracker.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetShowByIdAsync(int id)
         {
             if (id <= 0)
