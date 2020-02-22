@@ -7,13 +7,14 @@ namespace TeleTracker.Core.DTOs
 {
     public class MovieDTO
     {
-        [JsonProperty]
         public string ID { get; set; }
-
-        [JsonProperty("original_title")]
         public string Title { get; set; }
-
-        [JsonProperty("original_language")]
         public string Language { get; set; }
+        public DateTime? ReleaseDate { get; set; }
+        public int? Runtime { get; set; }
+        public string PosterPath { get; set; }
+        public string Overview { get; set; }
+        public double Popularity { get; set; }
+        public int VoteCount { get; set; }
     }
 }

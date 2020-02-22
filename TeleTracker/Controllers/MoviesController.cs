@@ -20,6 +20,19 @@ namespace TeleTracker.Controllers
         {
             _movieService = movieService;
         }
+        
+        [HttpGet("popular")]
+        public async Task<IActionResult> GetPopularMovies()
+        {
+            var movieList = new List<MovieDTO>();
+            await foreach(var movie in _movieService.GetPopularMoviesAsync())
+            {
+                movieList.Add(movie);
+            }
+            if (movieList.Count == 0)
+                return NotFound();
+            return Ok(movieList);
+        }
 
         [HttpGet("{id}")]
         [Authorize]

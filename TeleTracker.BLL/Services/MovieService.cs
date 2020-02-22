@@ -30,8 +30,23 @@ namespace TeleTracker.BLL.Services
             {
                 ID = movie.Id.ToString(),
                 Title = movie.Title,
-                Language = movie.OriginalLanguage
+                Language = movie.OriginalLanguage,
+                VoteCount = movie.VoteCount,
+                Popularity = movie.Popularity,
+                PosterPath = movie.PosterPath,
+                ReleaseDate = movie.ReleaseDate,
+                Overview = movie.Overview,
+                Runtime = movie.Runtime
             };
+        }
+
+        public async IAsyncEnumerable<MovieDTO> GetPopularMoviesAsync()
+        {
+            var movies = await _client.GetMoviePopularListAsync().ConfigureAwait(false);
+            foreach (var movie in movies.Results)
+            {
+                yield return await GetMovieByIdAsync(movie.Id.ToString());
+            }
         }
     }
 }

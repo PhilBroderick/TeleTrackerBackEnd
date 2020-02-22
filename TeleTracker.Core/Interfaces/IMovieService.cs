@@ -9,5 +9,6 @@ namespace TeleTracker.Core.Interfaces
     public interface IMovieService
     {
         Task<MovieDTO> GetMovieByIdAsync(string id);
+        IAsyncEnumerable<MovieDTO> GetPopularMoviesAsync();
     }
 }
