@@ -7,6 +7,7 @@ using TeleTracker.Core.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using TeleTracker.Core.Interfaces;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace TeleTracker.Controllers
 {
@@ -44,12 +45,15 @@ namespace TeleTracker.Controllers
             return Ok(shows.AsEnumerable());
         }
 
-        [HttpPost]
-        public IActionResult SubscribeToShowAsync(string showID)
+        [HttpPost("{id}/subscribe")]
+        public IActionResult SubscribeToShowAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(showID))
-                return NotFound(new SubscribeToShowResponse("123", showID, false));
-            return Ok(new SubscribeToShowResponse("123", showID, true));
+            var userId = string.Empty;
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+                userId = identity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (string.IsNullOrWhiteSpace(id))
+                return NotFound(new SubscribeToShowResponse(userId, id, false));
+            return Ok(new SubscribeToShowResponse(userId, id, true));
         }
 
         [HttpGet("popular")]
@@ -58,6 +62,24 @@ namespace TeleTracker.Controllers
             var shows = await _showService.GetMostPopularShows();
             if (shows == null) return BadRequest();
             return Ok(shows);
+        }
+
+        [HttpGet("subscribed")]
+        public async Task<IActionResult> GetSubscribedShowsAsync()
+        {
+            return Ok(new List<string>
+            {
+                "456",
+                "4194"
+            });
+        }
+
+        [HttpGet("{id}/issubscribed")]
+        public async Task<IActionResult> IsSubscribedToShowAsync(string id)
+        {
+            if (id == "456" || id == "4194")
+                return Ok(true);
+            return Ok(false);
         }
     }
 }
