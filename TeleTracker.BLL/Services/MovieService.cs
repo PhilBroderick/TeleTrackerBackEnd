@@ -33,7 +33,7 @@ namespace TeleTracker.BLL.Services
                 Language = movie.OriginalLanguage,
                 VoteCount = movie.VoteCount,
                 Popularity = movie.Popularity,
-                PosterPath = movie.PosterPath,
+                PosterPath = $"https://image.tmdb.org/t/p/original{movie.PosterPath}",
                 ReleaseDate = movie.ReleaseDate,
                 Overview = movie.Overview,
                 Runtime = movie.Runtime
