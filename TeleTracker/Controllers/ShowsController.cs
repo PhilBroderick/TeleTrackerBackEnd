@@ -16,10 +16,12 @@ namespace TeleTracker.Controllers
     public class ShowsController : ControllerBase
     {
         private readonly IShowService _showService;
+        private readonly ISubscriptionService _subService;
 
-        public ShowsController(IShowService showService)
+        public ShowsController(IShowService showService, ISubscriptionService subService)
         {
             _showService = showService;
+            _subService = subService;
         }
 
         [HttpGet("{id:int}")]
@@ -46,14 +48,14 @@ namespace TeleTracker.Controllers
         }
 
         [HttpPost("{id}/subscribe")]
-        public IActionResult SubscribeToShowAsync(string id)
+        public async Task<IActionResult> SubscribeToShowAsync(string id)
         {
             var userId = string.Empty;
             if (HttpContext.User.Identity is ClaimsIdentity identity)
                 userId = identity.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (string.IsNullOrWhiteSpace(id))
                 return NotFound(new SubscribeToShowResponse(userId, id, false));
-            return Ok(new SubscribeToShowResponse(userId, id, true));
+            return Ok(new SubscribeToShowResponse(userId, id, await _subService.SubscribeToShow(id, userId)));
         }
 
         [HttpGet("popular")]

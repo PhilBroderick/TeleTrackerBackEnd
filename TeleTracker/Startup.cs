@@ -54,6 +54,7 @@ namespace TeleTracker
                 new ServiceConfiguration(Configuration.GetSection("MovieDB_Key").Value));
             services.AddScoped<IShowService, ShowService>();
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

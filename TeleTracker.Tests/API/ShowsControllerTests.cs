@@ -7,6 +7,8 @@ using TeleTracker.Core.DTOs;
 using TeleTracker.Core.Interfaces;
 using Moq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace TeleTracker.Tests.API
 {
@@ -16,6 +18,8 @@ namespace TeleTracker.Tests.API
         private ShowsController _showController;
         private ShowDTO _showDto;
         private Mock<IShowService> _showService;
+        private Mock<ISubscriptionService> _subService;
+        private Mock<HttpContext> _contextMock;
 
         [SetUp]
         public void Setup()
@@ -25,7 +29,12 @@ namespace TeleTracker.Tests.API
             _showService = new Mock<IShowService>();
             _showService.Setup(s => s.GetMostPopularShows()).Returns(Task.FromResult(new List<ShowPopularityDTO>()));
             _showService.Setup(s => s.GetShowByIdAsync(1234)).Returns(Task.FromResult(_showDto));
-            _showController = new ShowsController(_showService.Object);
+            _subService = new Mock<ISubscriptionService>();
+            _subService.Setup(s => s.SubscribeToShow(_showDto.ID, "123")).Returns(Task.FromResult(true));
+            _contextMock = new Mock<HttpContext>();
+            _contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal());
+            _showController = new ShowsController(_showService.Object, _subService.Object);
+            _showController.ControllerContext.HttpContext = _contextMock.Object;
         }
 
         [Test]
@@ -56,7 +65,7 @@ namespace TeleTracker.Tests.API
         [Test]
         public void SubscribeToShowAsync_IdIsValid_ReturnSuccessfulSubscribeResponse()
         {
-            var result = (OkObjectResult)_showController.SubscribeToShowAsync("1234");
+            var result = (OkObjectResult)_showController.SubscribeToShowAsync(_showDto.ID).Result;
 
             Assert.That(((SubscribeToShowResponse)result.Value).Message, Does.Contain("successfully"));
         }
@@ -67,7 +76,7 @@ namespace TeleTracker.Tests.API
         [TestCase(" ")]
         public void SubscribeToShowAsync_IdIsInvalid_ReturnUnsuccesfulSubscribeResponse(string invalidShowID)
         {
-            var result = (NotFoundObjectResult)_showController.SubscribeToShowAsync(invalidShowID);
+            var result = (NotFoundObjectResult)_showController.SubscribeToShowAsync(invalidShowID).Result;
 
             Assert.That(((SubscribeToShowResponse)result.Value).Message, Does.Contain("unsuccessfully"));
         }
