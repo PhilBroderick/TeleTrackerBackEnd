@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using TeleTracker.Core.Interfaces;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using TeleTracker.Helpers;
 
 namespace TeleTracker.Controllers
 {
@@ -50,10 +51,8 @@ namespace TeleTracker.Controllers
         [HttpPost("{id}/subscribe")]
         public async Task<IActionResult> SubscribeToShowAsync(string id)
         {
-            var userId = string.Empty;
-            if (HttpContext.User.Identity is ClaimsIdentity identity)
-                userId = identity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if (string.IsNullOrWhiteSpace(id))
+            var userId = ControllerContextHelper.GetCurrentUserID(HttpContext);
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(userId))
                 return NotFound(new SubscribeToShowResponse(userId, id, false));
             return Ok(new SubscribeToShowResponse(userId, id, await _subService.SubscribeToShow(id, userId)));
         }
@@ -69,11 +68,10 @@ namespace TeleTracker.Controllers
         [HttpGet("subscribed")]
         public async Task<IActionResult> GetSubscribedShowsAsync()
         {
-            return Ok(new List<string>
-            {
-                "456",
-                "4194"
-            });
+            var userId = ControllerContextHelper.GetCurrentUserID(HttpContext);
+            if (string.IsNullOrWhiteSpace(userId))
+                return NotFound();
+            return Ok(await _subService.GetSubscribedShows(userId));
         }
 
         [HttpGet("{id}/issubscribed")]

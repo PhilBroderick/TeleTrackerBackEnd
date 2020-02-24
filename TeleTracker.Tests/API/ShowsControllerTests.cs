@@ -20,6 +20,7 @@ namespace TeleTracker.Tests.API
         private Mock<IShowService> _showService;
         private Mock<ISubscriptionService> _subService;
         private Mock<HttpContext> _contextMock;
+        private static readonly string _userId = "123";
 
         [SetUp]
         public void Setup()
@@ -32,7 +33,11 @@ namespace TeleTracker.Tests.API
             _subService = new Mock<ISubscriptionService>();
             _subService.Setup(s => s.SubscribeToShow(_showDto.ID, "123")).Returns(Task.FromResult(true));
             _contextMock = new Mock<HttpContext>();
-            _contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal());
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, _userId),
+            }, "mock"));
+            _contextMock.Setup(x => x.User).Returns(user);
             _showController = new ShowsController(_showService.Object, _subService.Object);
             _showController.ControllerContext.HttpContext = _contextMock.Object;
         }
