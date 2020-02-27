@@ -14,7 +14,7 @@ namespace TeleTracker.CustomResponses
         {
             get
             {
-                return string.Concat(UserID, _isSuccess ? " successfully" : " unsuccessfully", " subscribed to ", EntityID);
+                return string.Concat("UserId ", UserID, _isSuccess ? " successfully" : " unsuccessfully", " subscribed to EntityID: ", EntityID);
             }
         }
 

@@ -49,11 +49,13 @@ namespace TeleTracker.Controllers
         }
 
         [HttpPost("{id}/subscribe")]
+        [Authorize]
         public async Task<IActionResult> SubscribeToShowAsync(string id)
         {
             var userId = ControllerContextHelper.GetCurrentUserID(HttpContext);
             if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(userId))
                 return NotFound(new SubscribeToShowResponse(userId, id, false));
+            await _subService.InitializeService();
             return Ok(new SubscribeToShowResponse(userId, id, await _subService.SubscribeToShow(id, userId)));
         }
 
@@ -66,6 +68,7 @@ namespace TeleTracker.Controllers
         }
 
         [HttpGet("subscribed")]
+        [Authorize]
         public async Task<IActionResult> GetSubscribedShowsAsync()
         {
             var userId = ControllerContextHelper.GetCurrentUserID(HttpContext);

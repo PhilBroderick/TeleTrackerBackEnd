@@ -52,6 +52,10 @@ namespace TeleTracker
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IServiceConfiguration>(_ =>
                 new ServiceConfiguration(Configuration.GetSection("MovieDB_Key").Value));
+            services.AddScoped<ICosmosConfiguration>(_ =>
+                new CosmosConfiguration(Configuration.GetValue<string>("CosmosDB:EndpointUri"),
+                                        Configuration.GetSection("CosmosDB").GetSection("PrimaryKey").Value,
+                                        Configuration.GetSection("CosmosDB").GetSection("DatabaseId").Value));
             services.AddScoped<IShowService, ShowService>();
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
