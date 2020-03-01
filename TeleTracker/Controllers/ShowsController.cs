@@ -55,8 +55,9 @@ namespace TeleTracker.Controllers
             var userId = ControllerContextHelper.GetCurrentUserID(HttpContext);
             if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(userId))
                 return NotFound(new SubscribeToShowResponse(userId, id, false));
+            var showSubscription = await GetShowSubscription(id);
             await _subService.InitializeService();
-            return Ok(new SubscribeToShowResponse(userId, id, await _subService.SubscribeToShow(id, userId)));
+            return Ok(new SubscribeToShowResponse(userId, id, await _subService.SubscribeToShow(showSubscription, userId)));
         }
 
         [HttpGet("popular")]
@@ -74,6 +75,7 @@ namespace TeleTracker.Controllers
             var userId = ControllerContextHelper.GetCurrentUserID(HttpContext);
             if (string.IsNullOrWhiteSpace(userId))
                 return NotFound();
+            await _subService.InitializeService();
             return Ok(await _subService.GetSubscribedShows(userId));
         }
 
@@ -83,6 +85,16 @@ namespace TeleTracker.Controllers
             if (id == "456" || id == "4194")
                 return Ok(true);
             return Ok(false);
+        }
+
+        private async Task<ShowSubscriptionDTO> GetShowSubscription(string id)
+        {
+            var show = await _showService.GetShowByIdAsync(int.Parse(id));
+            return new ShowSubscriptionDTO
+            {
+                Id = id,
+                Title = show.Title
+            };
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeleTracker.BLL.Interfaces;
+using TeleTracker.Core.DTOs;
 using TeleTracker.Core.Interfaces;
 using TeleTracker.Core.Models;
 
@@ -35,12 +36,15 @@ namespace TeleTracker.BLL.Services
             await CreateContainerAsync().ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<string>> GetSubscribedShows(string userId)
+        public async Task<IEnumerable<ShowSubscriptionDTO>> GetSubscribedShows(string userId)
         {
-            throw new NotImplementedException();
+            var user = await CheckIfUserExists(userId);
+            if (user is null)
+                return new List<ShowSubscriptionDTO>();
+            return user.ShowSubscriptions;
         }
 
-        public async Task<bool> SubscribeToShow(string showId, string userId)
+        public async Task<bool> SubscribeToShow(ShowSubscriptionDTO show, string userId)
         {
             var user = await CheckIfUserExists(userId);
             if (user is null)
@@ -49,14 +53,14 @@ namespace TeleTracker.BLL.Services
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserId = userId,
-                    ShowSubscriptionIds = new List<string>
+                    ShowSubscriptions = new List<ShowSubscriptionDTO>
                     {
-                        showId
+                        show
                     }
                 };
                 return await CreateUserSubscriptionAsync(newUser);
             }
-            user.ShowSubscriptionIds.Add(showId);
+            user.ShowSubscriptions.Add(show);
             return await UpdateUserSubcriptionAsync(user);
         }
 

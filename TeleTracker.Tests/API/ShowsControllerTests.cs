@@ -17,6 +17,7 @@ namespace TeleTracker.Tests.API
     {
         private ShowsController _showController;
         private ShowDTO _showDto;
+        private ShowSubscriptionDTO _showSubDto;
         private Mock<IShowService> _showService;
         private Mock<ISubscriptionService> _subService;
         private Mock<HttpContext> _contextMock;
@@ -25,13 +26,20 @@ namespace TeleTracker.Tests.API
         [SetUp]
         public void Setup()
         {
-            _showDto = new ShowDTO();
-            _showDto.ID = "1234";
+            _showDto = new ShowDTO
+            {
+                ID = "1234"
+            };
+            _showSubDto = new ShowSubscriptionDTO
+            {
+                Id = _showDto.ID,
+                Title = "Test"
+            };
             _showService = new Mock<IShowService>();
             _showService.Setup(s => s.GetMostPopularShows()).Returns(Task.FromResult(new List<ShowPopularityDTO>()));
             _showService.Setup(s => s.GetShowByIdAsync(1234)).Returns(Task.FromResult(_showDto));
             _subService = new Mock<ISubscriptionService>();
-            _subService.Setup(s => s.SubscribeToShow(_showDto.ID, "123")).Returns(Task.FromResult(true));
+            _subService.Setup(s => s.SubscribeToShow(_showSubDto, "123")).Returns(Task.FromResult(true));
             _contextMock = new Mock<HttpContext>();
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
             {
