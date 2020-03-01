@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TeleTracker.Core.DTOs;
 
 namespace TeleTracker.Core.Models
 {
@@ -13,7 +14,7 @@ namespace TeleTracker.Core.Models
         [JsonProperty(PropertyName = "userId")]
         public string UserId { get; set; }
 
-        public List<string> ShowSubscriptionIds { get; set; }
+        public List<ShowSubscriptionDTO> ShowSubscriptions { get; set; }
 
         public override string ToString()
         {
